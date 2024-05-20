@@ -14,6 +14,7 @@ import cn.zhaiyifan.lyric.LyricUtils;
 import cn.zhaiyifan.lyric.model.Lyric;
 import io.cjybyjk.statuslyricext.provider.ILrcProvider;
 import io.cjybyjk.statuslyricext.provider.KugouProvider;
+import io.cjybyjk.statuslyricext.provider.LRCLibProvider;
 import io.cjybyjk.statuslyricext.provider.LyricsifyProvider;
 import io.cjybyjk.statuslyricext.provider.NeteaseProvider;
 import io.cjybyjk.statuslyricext.provider.QQMusicProvider;
@@ -25,7 +26,8 @@ public class LrcGetter {
             new KugouProvider(),
             new QQMusicProvider(),
             new NeteaseProvider(),
-            new LyricsifyProvider()
+            new LyricsifyProvider(),
+            new LRCLibProvider()
     };
 
     private static MessageDigest messageDigest;
