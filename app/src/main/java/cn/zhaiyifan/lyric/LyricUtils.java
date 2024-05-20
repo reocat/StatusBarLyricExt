@@ -178,6 +178,7 @@ public class LyricUtils {
 
                     String content = line.substring(closedBracketIndex + 1);
                     for (long timestamp : timestampList) {
+                        content = content.replace("&apos;", "'");
                         lyric.addSentence(content, timestamp);
                     }
                 } else {
