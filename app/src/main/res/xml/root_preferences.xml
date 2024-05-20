@@ -20,6 +20,9 @@
         <Preference
             android:key="lyricview"
             android:title="LyricView" />
+        <Preference
+            android:key="forkauthor"
+            android:title="fork by miaaaa0a :3" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -39,7 +39,7 @@ public class SettingsActivity extends FragmentActivity {
         }
 
         // add urls
-        mUrlMap.put("app", "https://github.com/cjybyjk/StatusBarLyricExt");
+        mUrlMap.put("app", "https://github.com/miaaaa0a/StatusBarLyricExt");
         mUrlMap.put("lyricview", "https://github.com/markzhai/LyricView");
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
