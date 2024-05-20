@@ -19,12 +19,14 @@ public class LRCLibProvider implements ILrcProvider {
 
     @Override
     public LyricResult getLyric(MediaMetadata data) throws IOException {
+        String artist = MediaMetadata.METADATA_KEY_ARTIST;
+        String album = MediaMetadata.METADATA_KEY_ALBUM;
         String searchUrl = String.format(
                 Locale.getDefault(),
                 LRCLIB_SEARCH_URL_FORMAT,
-                URLEncoder.encode(data.getString(MediaMetadata.METADATA_KEY_ARTIST), "UTF-8"),
+                URLEncoder.encode(artist, "UTF-8"),
                 URLEncoder.encode(data.getString(MediaMetadata.METADATA_KEY_TITLE), "UTF-8"),
-                URLEncoder.encode(data.getString(MediaMetadata.METADATA_KEY_ALBUM), "UTF-8"),
+                URLEncoder.encode(album, "UTF-8"),
                 data.getLong(MediaMetadata.METADATA_KEY_DURATION) / 1000
         );
         JSONObject searchResult;
