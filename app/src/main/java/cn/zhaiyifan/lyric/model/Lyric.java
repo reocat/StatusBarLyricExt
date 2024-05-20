@@ -1,11 +1,15 @@
 package cn.zhaiyifan.lyric.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class Lyric {
-    private static final String TAG = Lyric.class.getSimpleName();
+    static {
+        Lyric.class.getSimpleName();
+    }
 
     public String title;
     public String artist;
@@ -14,8 +18,9 @@ public class Lyric {
     public String author;
     public int offset;
     public long length;
-    public List<Sentence> sentenceList = new ArrayList<Sentence>(100);
+    public List<Sentence> sentenceList = new ArrayList<>(100);
 
+    @NonNull
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Title: " + title + "\n")
@@ -44,7 +49,7 @@ public class Lyric {
         }
     }
 
-    public class Sentence {
+    public static class Sentence {
         public String content;
         public long fromTime;
 
@@ -53,8 +58,9 @@ public class Lyric {
             this.fromTime = fromTime;
         }
 
+        @NonNull
         public String toString() {
-            return String.valueOf(fromTime) + ": " + content;
+            return fromTime + ": " + content;
         }
     }
 }

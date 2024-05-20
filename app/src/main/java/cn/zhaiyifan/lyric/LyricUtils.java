@@ -29,7 +29,7 @@ public class LyricUtils {
             }
             Collections.sort(lyric.sentenceList, new Lyric.SentenceComparator());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("ERROR", String.valueOf(e));
         }
         if (TextUtils.isEmpty(lyric.title) || TextUtils.isEmpty(lyric.artist)) {
             String title;
@@ -50,15 +50,6 @@ public class LyricUtils {
             }
         }
         return lyric;
-    }
-
-    /**
-     * Save lyric to local app directory
-     *
-     * @return Saved destination. Null if failed.
-     */
-    public static String saveLyric(Lyric lyric) {
-        return "";
     }
 
     /**
@@ -133,7 +124,7 @@ public class LyricUtils {
         return found;
     }
 
-    private static boolean parseLine(String line, Lyric lyric) {
+    private static void parseLine(String line, Lyric lyric) {
         int lineLength = line.length();
         line = line.trim();
         int openBracketIndex, closedBracketIndex;
@@ -143,29 +134,29 @@ public class LyricUtils {
             closedBracketIndex = line.indexOf(']', openBracketIndex);
             // (1) ']' does not exist, (2) is the first character
             if (closedBracketIndex < 1)
-                return false;
+                return;
             String closedTag = line.substring(openBracketIndex + 1, closedBracketIndex);
-            String[] colonSplited = closedTag.split(":", 2);
-            if (colonSplited.length < 2)
-                return false;
+            String[] colonSplit = closedTag.split(":", 2);
+            if (colonSplit.length < 2)
+                return;
 
-            if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_TITLE)) {
-                lyric.title = colonSplited[1].trim();
-            } else if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_ARTIST)) {
-                lyric.artist = colonSplited[1].trim();
-            } else if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_ALBUM)) {
-                lyric.album = colonSplited[1].trim();
-            } else if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_CREATOR_LRCFILE)) {
-                lyric.by = colonSplited[1].trim();
-            } else if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_CREATOR_SONGTEXT)) {
-                lyric.author = colonSplited[1].trim();
-            } else if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_LENGTH)) {
-                lyric.length = parseTime(colonSplited[1].trim(), lyric);
-            } else if (colonSplited[0].equalsIgnoreCase(Constants.ID_TAG_OFFSET)) {
-                lyric.offset = parseOffset(colonSplited[1].trim());
+            if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_TITLE)) {
+                lyric.title = colonSplit[1].trim();
+            } else if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_ARTIST)) {
+                lyric.artist = colonSplit[1].trim();
+            } else if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_ALBUM)) {
+                lyric.album = colonSplit[1].trim();
+            } else if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_CREATOR_LRCFILE)) {
+                lyric.by = colonSplit[1].trim();
+            } else if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_CREATOR_SONGTEXT)) {
+                lyric.author = colonSplit[1].trim();
+            } else if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_LENGTH)) {
+                lyric.length = parseTime(colonSplit[1].trim(), lyric);
+            } else if (colonSplit[0].equalsIgnoreCase(Constants.ID_TAG_OFFSET)) {
+                lyric.offset = parseOffset(colonSplit[1].trim());
             } else {
-                if (Character.isDigit(colonSplited[0].charAt(0))) {
-                    List<Long> timestampList = new LinkedList<Long>();
+                if (Character.isDigit(colonSplit[0].charAt(0))) {
+                    List<Long> timestampList = new LinkedList<>();
                     long time = parseTime(closedTag, lyric);
                     if (time != -1) {
                         timestampList.add(time);
@@ -191,13 +182,12 @@ public class LyricUtils {
                     }
                 } else {
                     // Ignore unknown tag
-                    return true;
+                    return;
                 }
             }
             // We may have line like [00:53.60]On a dark [00:54.85]desert highway
             openBracketIndex = line.indexOf('[', closedBracketIndex + 1);
         }
-        return true;
     }
 
     /**
@@ -207,7 +197,7 @@ public class LyricUtils {
      * @return 此时间表示的毫秒
      */
     private static long parseTime(String time, Lyric lyric) {
-        String[] ss = time.split("\\:|\\.");
+        String[] ss = time.split("[:.]");
         // 如果 是两位以后，就非法了
         if (ss.length < 2) {
             return -1;
@@ -225,7 +215,7 @@ public class LyricUtils {
                     throw new RuntimeException("数字不合法!");
                 }
                 // System.out.println("time" + (min * 60 + sec) * 1000L);
-                return (min * 60 + sec) * 1000L;
+                return (min * 60L + sec) * 1000L;
             } catch (Exception exe) {
                 return -1;
             }
@@ -238,7 +228,7 @@ public class LyricUtils {
                     throw new RuntimeException("数字不合法!");
                 }
                 // System.out.println("time" + (min * 60 + sec) * 1000L + mm);
-                return (min * 60 + sec) * 1000L + mm;
+                return (min * 60L + sec) * 1000L + mm;
             } catch (Exception exe) {
                 return -1;
             }
@@ -256,7 +246,7 @@ public class LyricUtils {
     private static int parseOffset(String str) {
         if (str.equalsIgnoreCase("0"))
             return 0;
-        String[] ss = str.split("\\:");
+        String[] ss = str.split(":");
         if (ss.length == 2) {
             if (ss[0].equalsIgnoreCase("offset")) {
                 int os = Integer.parseInt(ss[1]);

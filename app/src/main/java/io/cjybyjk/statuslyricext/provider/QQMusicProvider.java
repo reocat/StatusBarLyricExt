@@ -40,7 +40,7 @@ public class QQMusicProvider implements ILrcProvider {
                 return result;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("ERROR", String.valueOf(e));
             return null;
         }
         return null;

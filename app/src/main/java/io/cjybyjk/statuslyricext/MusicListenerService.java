@@ -19,8 +19,8 @@ import android.os.Message;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
-import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -28,6 +28,7 @@ import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import cn.zhaiyifan.lyric.LyricUtils;
 import cn.zhaiyifan.lyric.model.Lyric;
@@ -54,7 +55,7 @@ public class MusicListenerService extends NotificationListenerService {
     private final BroadcastReceiver mIgnoredPackageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constants.BROADCAST_IGNORED_APP_CHANGED)) {
+            if (Objects.equals(intent.getAction(), Constants.BROADCAST_IGNORED_APP_CHANGED)) {
                 updateIgnoredPackageList();
                 unBindMediaListeners();
                 bindMediaListeners();
@@ -62,9 +63,9 @@ public class MusicListenerService extends NotificationListenerService {
         }
     };
 
-    private final Handler mHandler = new Handler(Looper.myLooper()) {
+    private final Handler mHandler = new Handler(Objects.requireNonNull(Looper.myLooper())) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == MSG_LYRIC_UPDATE_DONE && msg.getData().getString("title", "").equals(requiredLrcTitle)) {
                 mLyric = (Lyric) msg.obj;
@@ -76,7 +77,7 @@ public class MusicListenerService extends NotificationListenerService {
     private final Runnable mLyricUpdateRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mMediaController == null || mMediaController.getPlaybackState().getState() != PlaybackState.STATE_PLAYING) {
+            if (mMediaController == null || Objects.requireNonNull(mMediaController.getPlaybackState()).getState() != PlaybackState.STATE_PLAYING) {
                 stopLyric();
                 return;
             }
@@ -201,7 +202,8 @@ public class MusicListenerService extends NotificationListenerService {
     private void updateIgnoredPackageList() {
         mIgnoredPackageList.clear();
         String value = mSharedPreferences.getString(Constants.PREFERENCE_KEY_IGNORED_PACKAGES, "");
-        String[] arr = value.split(";");
+        String[] arr = {};
+        if (value != null) arr = value.split(";");
         for (String str : arr) {
             if (TextUtils.isEmpty(str)) continue;
             mIgnoredPackageList.add(str.trim());

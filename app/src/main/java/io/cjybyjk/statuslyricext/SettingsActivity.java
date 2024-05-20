@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.preference.Preference;
@@ -76,7 +77,7 @@ public class SettingsActivity extends FragmentActivity {
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
             versionName = pi.versionName;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("ERROR", String.valueOf(e));
         }
         return versionName;
     }

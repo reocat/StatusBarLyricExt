@@ -38,7 +38,7 @@ public class LrcGetter {
             try {
                 messageDigest =  MessageDigest.getInstance("SHA");
             } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
+                Log.e("ERROR", String.valueOf(e));
                 return null;
             }
         }
@@ -57,7 +57,7 @@ public class LrcGetter {
                     currentResult = lyricResult;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("ERROR", String.valueOf(e));
             }
         }
         if (currentResult != null && LyricSearchUtil.isLyricContent(currentResult.mLyric)) {
@@ -67,7 +67,7 @@ public class LrcGetter {
                 lrcOut.close();
                 return LyricUtils.parseLyric(requireLrcPath, "UTF-8");
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("ERROR", String.valueOf(e));
             }
         }
         return null;

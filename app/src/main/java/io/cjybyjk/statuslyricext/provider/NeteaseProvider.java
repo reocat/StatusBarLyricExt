@@ -1,6 +1,7 @@
 package io.cjybyjk.statuslyricext.provider;
 
 import android.media.MediaMetadata;
+import android.util.Log;
 import android.util.Pair;
 
 import org.json.JSONArray;
@@ -36,7 +37,7 @@ public class NeteaseProvider implements ILrcProvider {
                 return result;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("ERROR", String.valueOf(e));
             return null;
         }
         return null;

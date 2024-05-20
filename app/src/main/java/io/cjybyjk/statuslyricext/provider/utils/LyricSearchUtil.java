@@ -2,6 +2,7 @@ package io.cjybyjk.statuslyricext.provider.utils;
 
 import android.media.MediaMetadata;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +43,7 @@ public class LyricSearchUtil {
             }
             return stringBuilder.toString();
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("ERROR", String.valueOf(e));
         }
         return null;
     }
@@ -54,8 +55,8 @@ public class LyricSearchUtil {
         if (!realTitle.contains(title) && !title.contains(realTitle) || TextUtils.isEmpty(title)) {
             return 10000;
         }
-        long res = levenshtein(title, realTitle) * 100;
-        res += levenshtein(artist, realArtist) * 10;
+        long res = levenshtein(title, realTitle) * 100L;
+        res += levenshtein(artist, realArtist) * 10L;
         res += levenshtein(album, realAlbum);
         return res;
     }
@@ -68,7 +69,7 @@ public class LyricSearchUtil {
         }
         final int lenA = a.length(), lenB = b.length();
         int[][] dp = new int[lenA+1][lenB+1];
-        int flag = 0;
+        int flag;
         for (int i = 0; i <= lenA; i++) {
             for (int j = 0; j <= lenB; j++) dp[i][j] = lenA + lenB;
         }

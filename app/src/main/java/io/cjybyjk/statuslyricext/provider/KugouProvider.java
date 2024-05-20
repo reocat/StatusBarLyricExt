@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import android.util.Base64;
+import android.util.Log;
 import android.util.Pair;
 
 import io.cjybyjk.statuslyricext.provider.utils.HttpRequestUtil;
@@ -37,7 +38,7 @@ public class KugouProvider implements ILrcProvider {
                 return result;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("ERROR", String.valueOf(e));
             return null;
         }
         return null;

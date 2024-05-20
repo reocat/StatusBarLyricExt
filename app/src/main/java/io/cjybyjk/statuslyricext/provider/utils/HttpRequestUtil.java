@@ -1,7 +1,6 @@
 package io.cjybyjk.statuslyricext.provider.utils;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
