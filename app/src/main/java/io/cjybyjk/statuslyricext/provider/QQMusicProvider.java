@@ -2,6 +2,7 @@ package io.cjybyjk.statuslyricext.provider;
 
 import android.media.MediaMetadata;
 import android.util.Base64;
+import android.util.Log;
 import android.util.Pair;
 
 import org.json.JSONArray;
@@ -32,7 +33,9 @@ public class QQMusicProvider implements ILrcProvider {
                 Pair<String, Long> pair = getLrcUrl(array, data);
                 JSONObject lrcJson = HttpRequestUtil.getJsonResponse(pair.first, QM_REFERER);
                 LyricResult result = new LyricResult();
-                result.mLyric = new String(Base64.decode(lrcJson.getString("lyric").getBytes(), Base64.DEFAULT));
+                result.mLyric = "";
+                if ((lrcJson != null) && (lrcJson.getInt("code") == 0))
+                    result.mLyric = new String(Base64.decode(lrcJson.getString("lyric").getBytes(), Base64.DEFAULT));
                 result.mDistance = pair.second;
                 return result;
             }
