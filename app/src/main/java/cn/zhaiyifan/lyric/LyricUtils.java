@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,22 +17,6 @@ import java.util.List;
 
 public class LyricUtils {
     private static final String TAG = LyricUtils.class.getSimpleName();
-
-
-    public static Lyric parseLyric(InputStream inputStream, String Encoding) {
-        Lyric lyric = new Lyric();
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, Encoding));
-            String line;
-            while ((line = br.readLine()) != null) {
-                parseLine(line, lyric);
-            }
-            Collections.sort(lyric.sentenceList, new Lyric.SentenceComparator());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lyric;
-    }
 
     public static Lyric parseLyric(File file, String Encoding) {
         Lyric lyric = new Lyric();
@@ -154,7 +137,7 @@ public class LyricUtils {
         int lineLength = line.length();
         line = line.trim();
         int openBracketIndex, closedBracketIndex;
-        openBracketIndex = line.indexOf('[', 0);
+        openBracketIndex = line.indexOf('[');
 
         while (openBracketIndex != -1) {
             closedBracketIndex = line.indexOf(']', openBracketIndex);
@@ -202,7 +185,7 @@ public class LyricUtils {
                         closedBracketIndex = nextClosedBracketIndex;
                     }
 
-                    String content = line.substring(closedBracketIndex + 1, line.length());
+                    String content = line.substring(closedBracketIndex + 1);
                     for (long timestamp : timestampList) {
                         lyric.addSentence(content, timestamp);
                     }
