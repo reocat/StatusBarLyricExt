@@ -24,7 +24,6 @@ public class LyricsifyProvider implements ILrcProvider {
     public LyricResult getLyric(MediaMetadata data) throws IOException {
         String searchUrl = String.format(Locale.getDefault(), LYRICSIFY_SEARCH_URL_FORMAT, LyricSearchUtil.getSearchKey(data));
         String searchResult = HttpRequestUtil.getTextResponse(searchUrl);
-        Log.d("STATE", searchResult + " " + searchUrl);
         if (searchResult != null) {
             Document doc = Jsoup.parse(searchResult);
             Elements resultElements = doc.select(".li");

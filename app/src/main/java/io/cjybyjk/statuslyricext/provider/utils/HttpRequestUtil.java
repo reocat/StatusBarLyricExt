@@ -1,6 +1,7 @@
 package io.cjybyjk.statuslyricext.provider.utils;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,10 +24,10 @@ public class HttpRequestUtil {
         URL httpUrl = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) httpUrl.openConnection();
         connection.setRequestMethod("GET");
-        connection.setRequestProperty("Accept","text/html, application/xhtml+xml, */*");
-        connection.setRequestProperty("Accept-Language","en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3");
-        connection.setRequestProperty("Accept-Encoding","deflate");
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0");
+        connection.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+        connection.setRequestProperty("Accept-Language","en-GB,en;q=0.9,en-US;q=0.8,hr;q=0.7");
+        connection.setRequestProperty("Accept-Encoding","text/html; charset=UTF-8");
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
         if (!TextUtils.isEmpty(referer)) {
             connection.setRequestProperty("Referer", referer);
         }

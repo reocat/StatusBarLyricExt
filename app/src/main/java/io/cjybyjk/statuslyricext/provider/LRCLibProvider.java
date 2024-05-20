@@ -14,7 +14,7 @@ import io.cjybyjk.statuslyricext.provider.utils.HttpRequestUtil;
 
 public class LRCLibProvider implements ILrcProvider {
 
-    private static final String LRCLIB_BASE_URL = "http://lrclib.net/";
+    private static final String LRCLIB_BASE_URL = "https://lrclib.net/";
     private static final String LRCLIB_SEARCH_URL_FORMAT = LRCLIB_BASE_URL + "api/get?artist_name=%s&track_name=%s&album_name=%s&duration=%d";
 
     @Override
@@ -30,8 +30,7 @@ public class LRCLibProvider implements ILrcProvider {
         JSONObject searchResult;
         try {
             searchResult = HttpRequestUtil.getJsonResponse(searchUrl);
-            Log.d("STATE", searchUrl + " " + searchResult);
-            if (searchResult != null && searchResult.getLong("status") == 200) {
+            if (searchResult != null) {
                 LyricResult result = new LyricResult();
                 result.mLyric = searchResult.getString("syncedLyrics");
                 result.mDistance = searchResult.getInt("duration");

@@ -248,9 +248,6 @@ public class MusicListenerService extends NotificationListenerService {
         public void run() {
             if (handler == null) return;
             Lyric lrc = LrcGetter.getLyric(context, data);
-            if (lrc != null) {
-                Log.d("STATE", lrc.sentenceList.get(0).toString());
-            }
             Message message = new Message();
             message.what = MSG_LYRIC_UPDATE_DONE;
             message.obj = lrc;

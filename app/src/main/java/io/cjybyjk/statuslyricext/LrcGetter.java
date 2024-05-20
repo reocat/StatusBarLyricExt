@@ -45,7 +45,6 @@ public class LrcGetter {
         File cachePath = context.getCacheDir();
         String meta = mediaMetadata.getString(MediaMetadata.METADATA_KEY_TITLE) + "," + mediaMetadata.getString(MediaMetadata.METADATA_KEY_ARTIST) + "," +
                 mediaMetadata.getString(MediaMetadata.METADATA_KEY_ALBUM) + ", " + mediaMetadata.getLong(MediaMetadata.METADATA_KEY_DURATION);
-        Log.d("STATE", meta);
         File requireLrcPath = new File(cachePath, printHexBinary(messageDigest.digest(meta.getBytes())) + ".lrc");
         if (requireLrcPath.exists()) {
             return LyricUtils.parseLyric(requireLrcPath, "UTF-8");
