@@ -2,6 +2,7 @@ package io.cjybyjk.statuslyricext;
 
 import android.content.Context;
 import android.media.MediaMetadata;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,6 +14,7 @@ import cn.zhaiyifan.lyric.LyricUtils;
 import cn.zhaiyifan.lyric.model.Lyric;
 import io.cjybyjk.statuslyricext.provider.ILrcProvider;
 import io.cjybyjk.statuslyricext.provider.KugouProvider;
+import io.cjybyjk.statuslyricext.provider.LyricsifyProvider;
 import io.cjybyjk.statuslyricext.provider.NeteaseProvider;
 import io.cjybyjk.statuslyricext.provider.QQMusicProvider;
 import io.cjybyjk.statuslyricext.provider.utils.LyricSearchUtil;
@@ -22,7 +24,8 @@ public class LrcGetter {
     private static final ILrcProvider[] providers = {
             new KugouProvider(),
             new QQMusicProvider(),
-            new NeteaseProvider()
+            new NeteaseProvider(),
+            new LyricsifyProvider()
     };
 
     private static MessageDigest messageDigest;
@@ -40,6 +43,7 @@ public class LrcGetter {
         File cachePath = context.getCacheDir();
         String meta = mediaMetadata.getString(MediaMetadata.METADATA_KEY_TITLE) + "," + mediaMetadata.getString(MediaMetadata.METADATA_KEY_ARTIST) + "," +
                 mediaMetadata.getString(MediaMetadata.METADATA_KEY_ALBUM) + ", " + mediaMetadata.getLong(MediaMetadata.METADATA_KEY_DURATION);
+        Log.d("STATE", meta);
         File requireLrcPath = new File(cachePath, printHexBinary(messageDigest.digest(meta.getBytes())) + ".lrc");
         if (requireLrcPath.exists()) {
             return LyricUtils.parseLyric(requireLrcPath, "UTF-8");

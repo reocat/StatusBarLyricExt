@@ -19,6 +19,7 @@ import android.os.Message;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -247,6 +248,7 @@ public class MusicListenerService extends NotificationListenerService {
         public void run() {
             if (handler == null) return;
             Lyric lrc = LrcGetter.getLyric(context, data);
+            Log.d("STATE", lrc.sentenceList.get(0).toString());
             Message message = new Message();
             message.what = MSG_LYRIC_UPDATE_DONE;
             message.obj = lrc;

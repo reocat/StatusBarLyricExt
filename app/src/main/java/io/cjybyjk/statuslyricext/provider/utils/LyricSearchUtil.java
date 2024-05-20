@@ -20,9 +20,9 @@ public class LyricSearchUtil {
         String artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST);
         String ret;
         if (!TextUtils.isEmpty(artist)) {
-            ret = artist + "-" + title;
+            ret = artist + " - " + title;
         } else if (!TextUtils.isEmpty(album)) {
-            ret = album + "-" + title;
+            ret = album + " - " + title;
         } else {
             ret = title;
         }
