@@ -23,11 +23,8 @@ import io.cjybyjk.statuslyricext.provider.utils.LyricSearchUtil;
 public class LrcGetter {
 
     private static final ILrcProvider[] providers = {
-            new KugouProvider(),
-            new QQMusicProvider(),
-            new NeteaseProvider(),
-            new LyricsifyProvider(),
-            new LRCLibProvider()
+        new LRCLibProvider(),    
+        new KugouProvider(),
     };
 
     private static MessageDigest messageDigest;
