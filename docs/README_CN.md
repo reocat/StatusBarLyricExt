@@ -1,3 +1,5 @@
+[English](README.md) | **简体中文**
+
 # StatusBarLyricExt
 
 这个工具可以为使用 [MediaSession](https://developer.android.google.cn/reference/android/media/session/MediaSession) 的音乐播放器添加状态栏歌词功能
